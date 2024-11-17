@@ -130,6 +130,28 @@ export default function Component() {
   );
   setFoodImages(randomFoodImages);
 
+  if (gameWon || gameOver) {
+    updateLeaderboard(); // Обновление leaderboard после окончания игры
+  }
+  // Сброс параметров игры
+  setPlayerPos(INITIAL_PLAYER_POS);
+  setEnemies(INITIAL_ENEMIES);
+  setFood(INITIAL_FOOD);
+  setScore(0);
+  setTournament(0);
+  setGameOver(false);
+  setGameWon(false);
+  setTimeRemaining(30);
+  // Установка времени последнего хода
+  setLastMoveTime(Date.now());
+  // Сброс количества ходов
+  setMoveCount(0);
+  // Обновление изображений еды
+  const randomFoodImages = INITIAL_FOOD.map(() =>
+    PIGGY_IMAGES[Math.floor(Math.random() * PIGGY_IMAGES.length)]
+  );
+  setFoodImages(randomFoodImages);
+
     if (gameWon || gameOver) {
       updateLeaderboard()
     }
@@ -147,7 +169,7 @@ export default function Component() {
       PIGGY_IMAGES[Math.floor(Math.random() * PIGGY_IMAGES.length)]
     )
     setFoodImages(randomFoodImages)
-  }, [gameWon, gameOver, updateLeaderboard])
+  }, [gameWon, gameOver])
 
   useEffect(() => {
     resetGame()
@@ -187,7 +209,7 @@ export default function Component() {
     setLastMoveTime(Date.now());
 
     setPlayerPos((prev) => {
-      let newPos = { x: prev.x + dx, y: prev.y + dy }
+      const newPos = { x: prev.x + dx, y: prev.y + dy }
       
       if (newPos.x < 0) newPos.x = GRID_SIZE - 1
       if (newPos.x >= GRID_SIZE) newPos.x = 0
@@ -442,3 +464,7 @@ export default function Component() {
 }
 // Временное использование переменных, чтобы ESLint не жаловался
 console.log(lastMoveTime, moveCount);
+
+
+// Временное использование переменных, чтобы ESLint не жаловался
+console.log(setLeaderboard, lastMoveTime, moveCount);
